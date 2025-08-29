@@ -14,15 +14,15 @@
         "join.js"
     ],
     "EMAIL": "kicigo3882@cansku.com",
-    "PASSWORD": "RJ07ZAINA",
+    "PASSWORD": "",
     "OTPKEY": "",
-    "BOTNAME": " ✦🌎𝐏𝐑𝐈𝐍𝐂𝐄🌎🦋🎀:-)──➣✦🍒",
-    "PREFIX": ".",
+    "BOTNAME": " ✦🌎𝗗𝗢𝗟𝗟𝗬🌎🦋🎀:-)──➣✦🍒",
+    "PREFIX": "#",
     "ADMINBOT": [
-        "61560621821421"
+        "100071943783967"
     ],
     "NDH": [
-        "61560621821421"
+        "100071943783967"
     ],
     "DATABASE": {
         "sqlite": {
