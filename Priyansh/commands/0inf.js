@@ -30,11 +30,11 @@ var callback = () => api.sendMessage({body:` ╾━╤デ╦︻(▀̿Ĺ̯▀̿ �
 
 ☄️Bot Name︎︎︎☄️  ${global.config.BOTNAME}
 
-🔥Bot Admin🔥─━━◉❖Jamal≛Pathan❖◉━━─💔🥀
+🔥Bot Admin🔥─━━◉❖𝗝𝗨𝗟𝗠𝗜≛𝗝𝗔𝗔𝗧❖◉━━─💔🥀
 
-🙈bot andmin owner facebook id link🙈➪ https://www.facebook.com/share/19eFWEsDcF/ 💞🕊️
+🙈bot andmin owner facebook id link🙈➪ https://www.facebook.com/profile.php?id=61579787288908/ 💞🕊️
 
-👋For Any Kind Of Help Contact On Instagram 👇👇 https://www.instagram.com/alex972740?igsh=MWNpbDFnMzYyM3p5Nw==
+👋For Any Kind Of Help Contact On Instagram 👇👇 https://www.instagram.com/julmi_972?igsh=MWNpbDFnMzYyM3p5Nw==
 
 ✧══════•❁❀❁•══════✧
 
