@@ -1,8 +1,8 @@
-exports.config = {
+module.exports.config = {
   name: "info",
   version: "1.0.1", 
   hasPermssion: 0,
-  credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
+  credits: "Jamal Pathan",
   description: "Admin and Bot info.",
   commandCategory: "...",
   cooldowns: 1,
@@ -24,17 +24,17 @@ const time = process.uptime(),
 const moment = require("moment-timezone");
 var juswa = moment.tz("Asia/Dhaka").format("『D/MM/YYYY』 【HH:mm:ss】");
 var link =                                     
-["https://i.postimg.cc/BQXSmpbK/IMG-20250829-212925-062.jpg;
+["https://i.postimg.cc/BQXSmpbK/IMG-20250829-212925-062.jpg"];
 var callback = () => api.sendMessage({body:` ╾━╤デ╦︻(▀̿Ĺ̯▀̿ ̿)🇮🇳 𝐀𝐃𝐌𝐈𝐍 𝐀𝐍𝐃 𝐁𝐎𝐓 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐓𝐈𝐎𝐍 🇮🇳 
 (⌐▀͡ ̯ʖ▀)︻̷┻̿═━一-
 
 ☄️Bot Name︎︎︎☄️  ${global.config.BOTNAME}
 
-🔥Bot Admin🔥─━━◉❖𝗝𝗨𝗟𝗠𝗜≛𝗝𝗔𝗔𝗧❖◉━━─💔🥀
+🔥Bot Admin🔥─━━◉❖Jamal≛Pathan❖◉━━─💔🥀
 
-🙈bot andmin owner facebook id link🙈➪ https://www.facebook.com/julmijaat1008?mibextid=ZbWKwL 💞🕊️
+🙈bot andmin owner facebook id link🙈➪ https://www.facebook.com/share/19eFWEsDcF/ 💞🕊️
 
-👋For Any Kind Of Help Contact On Instagram 👇👇 https://instagram.com/_julmi_jaat__?igshid=OGQ5ZDc2ODk2ZA==
+👋For Any Kind Of Help Contact On Instagram 👇👇 https://www.instagram.com/alex972740?igsh=MWNpbDFnMzYyM3p5Nw==
 
 ✧══════•❁❀❁•══════✧
 
@@ -53,7 +53,7 @@ var callback = () => api.sendMessage({body:` ╾━╤デ╦︻(▀̿Ĺ̯▀̿ �
 
 🦢🍒•••ꞪɛᏒɛ ɪʂ ɮ❍┼ ❍ωɳɜɽ ɳaʍɜ•••🌷💞
 ┏━🕊️━━°❀•°:🎀🧸💙🧸🎀:°•❀°━━💞━┓
-🌸✦✧✧✧✧✰🍒─━━◉❖जुल्मी≛जाट❖◉━━─🌿✰✧✧✧✧✦🌸
+🌸✦✧✧✧✧✰🍒─━━◉❖𝗝𝗨𝗟𝗠𝗜≛𝗝𝗔𝗔𝗧❖◉━━─🌿✰✧✧✧✧✦🌸
 ┗━🕊️━━°❀•°:🎀🧸💙🧸🎀:°•❀°━━💞━┛
 
 
