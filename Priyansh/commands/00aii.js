@@ -17,7 +17,7 @@ module.exports.handleEvent = async function({ api, event }) {
   global.vampireSessions = global.vampireSessions || {};
 
   // STEP 1: Trigger "vampire"
-  if (body && body.trim().toLowerCase() === "Dolly") {
+  if (body && body.trim().toLowerCase() === "dolly") {
     global.vampireSessions[threadID] = true;
     return api.sendMessage("Bolo jaanu 😏 kya haal hai?", threadID, messageID);
   }
