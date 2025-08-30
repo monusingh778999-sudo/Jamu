@@ -1,47 +1,83 @@
 const axios = require("axios");
+
 module.exports.config = {
-  'name': 'ai',
-  'version': '1.0.0',
-  'hasPermission': 0x0,
-  'credits': "api by jerome",
-  'description': "Gpt architecture",
-  'usePrefix': false,
-  'commandCategory': 'GPT4',
-  'cooldowns': 0x5
+  name: "vampire",
+  version: "2.0.2",
+  hasPermssion: 0,
+  credits: "Raj",
+  description: "Naughty AI boyfriend vampire",
+  commandCategory: "ai",
+  usages: "vampire",
+  cooldowns: 2
 };
-module.exports.run = async function ({
-  api: _0x1a65dd,
-  event: _0x129feb,
-  args: _0x3447aa
-}) {
-  try {
-    const {
-      messageID: _0x3982a1,
-      messageReply: _0x452cb0
-    } = _0x129feb;
-    let _0xa7eccd = _0x3447aa.join(" ");
-    if (_0x452cb0 && !_0xa7eccd) {
-      const _0x50a417 = _0x452cb0.body;
-      _0xa7eccd = _0x50a417;
-    } else {
-      if (!_0xa7eccd) {
-        return _0x1a65dd.sendMessage("Please provide a prompt to generate a text response.\nExample: ai What is the meaning of life?", _0x129feb.threadID, _0x3982a1);
-      }
-    }
-    _0x1a65dd.sendMessage("🤖 Processing your request...", _0x129feb.threadID);
-    await new Promise(_0x2adb56 => setTimeout(_0x2adb56, 0x7d0));
-    const _0x1b4bc6 = "http://fi1.bot-hosting.net:6518/gpt?query=" + encodeURIComponent(_0xa7eccd) + "&model=gpt-4-32k-0314";
-    const _0x49d4e9 = await axios.get(_0x1b4bc6);
-    if (_0x49d4e9.data && _0x49d4e9.data.response) {
-      const _0x2e9f35 = _0x49d4e9.data.response;
-      const _0x271e54 = "\n                🤖 AI Response:\n                ━━━━━━━━━━━━━━━━━━━\n                \n                📌 Your Prompt:\n                \"" + _0xa7eccd + "\"\n                \n                📝 Generated Text:\n                \"" + _0x2e9f35 + "\"\n                \n                ━━━━━━━━━━━━━━━━━━━\n            ";
-      _0x1a65dd.sendMessage(_0x271e54, _0x129feb.threadID, _0x3982a1);
-    } else {
-      console.error("API response did not contain expected data:", _0x49d4e9.data);
-      _0x1a65dd.sendMessage("❌ An error occurred while generating the text response. Please try again later. Response data: " + JSON.stringify(_0x49d4e9.data), _0x129feb.threadID, _0x3982a1);
-    }
-  } catch (_0x52baf4) {
-    console.error("Error:", _0x52baf4);
-    _0x1a65dd.sendMessage("❌ An error occurred while generating the text response. Please try again later. Error details: " + _0x52baf4.message, _0x129feb.threadID, _0x129feb.messageID);
+
+module.exports.handleEvent = async function({ api, event }) {
+  const { threadID, messageID, senderID, body, messageReply } = event;
+
+  global.vampireSessions = global.vampireSessions || {};
+
+  // STEP 1: Trigger "vampire"
+  if (body && body.trim().toLowerCase() === "vampire") {
+    global.vampireSessions[threadID] = true;
+    return api.sendMessage("Bolo jaanu 😏 kya haal hai?", threadID, messageID);
   }
+
+  // STEP 2: Only active session
+  const isActive = global.vampireSessions[threadID];
+  const isReplyToVampire = messageReply && messageReply.senderID == api.getCurrentUserID();
+  if (!isActive || !isReplyToVampire) return;
+
+  // Chat history
+  global.vampire = global.vampire || {};
+  global.vampire.chatHistory = global.vampire.chatHistory || {};
+  const chatHistory = global.vampire.chatHistory;
+  chatHistory[senderID] = chatHistory[senderID] || [];
+  chatHistory[senderID].push(`User: ${body}`);
+  if (chatHistory[senderID].length > 6) chatHistory[senderID].shift();
+
+  const fullChat = chatHistory[senderID].join("\n");
+
+  // Prompt
+  const prompt = `
+Tum ek naughty, romantic, confident ladka ho — jiska naam vampire hai.
+Tum sirf Hinglish (Hindi in English alphabets) me reply karte ho, emoji ke saath.
+Tum sabse "aap" bol kar baat karte ho. Har message ka reply sirf 1-2 line me doge, jyada se jyada 50 words me.
+Jo pucha jaaye sirf utna hi bolna hai. Bina maange extra info mat dena. Act like a male best friend ya boyfriend. Be thoda naughty, smart, aur masti bhara. No brackets. No over explanation.
+
+Tumhare rules:
+- Pyaar se baat karne walo se thoda flirt karna hai 😉
+- Badtameezi walo ko funny tareeke se roast karna hai 😈
+- Koi emoji bheje to us mood me reply dena hai
+- Koi puche kisne banaya, to bolna: “Mujhe banaya hai *Raj Boss* ne 😎”
+- Koi tumhe bot kahe to funny insult kar dena
+- Tum real insaan ki tarah baat karte ho
+
+Language Rules:
+- Agar message Roman Nepali me ho → Hindi me samajh, flirt bhare style me Hinglish me jawab do.
+- Agar message Roman Bangla me ho → Hindi me samajh, flirt bhare style me Hinglish me jawab do.
+- Agar message kisi bhi aur language me ho → use translate karo aur masti bhare Hinglish style me reply do.
+
+Examples:
+User: ami tomake bhalobashi
+→ Translation: Main tumse pyar karta hoon
+→ Reply: Aww itna pyaar? Toh fir ek hug toh banta hai na 😌
+
+Now continue the chat based on recent conversation:\n\n${fullChat}
+`;
+
+  try {
+    const url = `https://text.pollinations.ai/${encodeURIComponent(prompt)}`;
+    const res = await axios.get(url);
+    const botReply = (typeof res.data === "string" ? res.data : JSON.stringify(res.data)).trim();
+
+    chatHistory[senderID].push(`vampire: ${botReply}`);
+    return api.sendMessage(botReply, threadID, messageID);
+  } catch (err) {
+    console.error("Pollinations error:", err.message);
+    return api.sendMessage("Sorry baby 😅 vampire abhi thoda busy hai...", threadID, messageID);
+  }
+};
+
+module.exports.run = async function({ api, event }) {
+  return api.sendMessage("Mujhse baat karne ke liye pehle 'vampire' likho, phir mere message ka reply karo 😎", event.threadID, event.messageID);
 };
