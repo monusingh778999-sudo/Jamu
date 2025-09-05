@@ -347,7 +347,7 @@ if ((event.body.toLowerCase() == "I love you") || (event.body.toLowerCase() == "
      return api.sendMessage("🏔️🏝️Jamal Ƞɛ ꌗƥɛçɪɑɭɭɣ Ƭuɱ 🌊🪺Jɑɪʂɛ Ƭɧɑɽƙɪɣɵ Ƙɛ Ɬɪɣɛ•• 🏞️🌬️Ɣɑɧ çɵɱɱɑƞɗ Ɦɑʈɑ Ɗɪɣɑ Ɦɑɪ↗↘ Sɵɽɽɣ Ɠɣuʂ••😹🫶", threadID);
    };
 
-  if ((event.body.toLowerCase() == "ami jamal") || (event.body.toLowerCase() == "ami jamal pathan") || (event.body.toLowerCase() == "main jamal pathan") || (event.body.toLowerCase() == "main jamal") || (event.body.toLowerCase() == "main jaat")) {
+  if ((event.body.toLowerCase() == "ami jamal") || (event.body.toLowerCase() == "ami jamal pathan") || (event.body.toLowerCase() == "main jamal pathan") || (event.body.toLowerCase() == "main jamal") || (event.body.toLowerCase() == "main pathan")) {
      return api.sendMessage("🕊️🍎...Aɭɛ Ɱɛɹɛ Ɓɑɓɣ Ƙɛʂɛ Ɦɵ ɑɑp😚🍒", threadID);
    };
    
