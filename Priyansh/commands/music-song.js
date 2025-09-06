@@ -50,7 +50,7 @@ module.exports.handleReply = async function ({ api, event, handleReply }) {
         if (fs.statSync(path).size > 26214400) return api.sendMessage('The file cannot be sent because it is larger than 25MB.', event.threadID, () => fs.unlinkSync(path), event.messageID);
         api.unsendMessage(handleReply.messageID)
         return api.sendMessage({ 
-		body: `─━━◉❖𝗝𝗨𝗟𝗠𝗜≛𝗝𝗔𝗔𝗧❖◉━━─\n====『 𝗠𝗨𝗦𝗜𝗖 』====
+		body: `─━━◉❖𝗝𝗔𝗠𝗔𝗟≛𝗣𝗔𝗧𝗛𝗔𝗡❖◉━━─\n====『 𝗠𝗨𝗦𝗜𝗖 』====
 [🎼] ➠ 𝐓𝐢𝐭𝐥𝐞: ${data.title}\n[📺] ➠ 𝘼𝙪𝙩𝙝𝙤𝙧: ${data.author}\n[⏰] ➠ 𝙏𝙞𝙢𝙚: ${this.convertHMS(data.dur)}\n[👀] ➠ 𝙑𝙞𝙚𝙬𝙨: ${data.viewCount}\n[💞] ➠ 𝙇𝙞𝙠𝙚𝙨: ${data.likes}\n 𝙋𝙪𝙗𝙡𝙞𝙨𝙝 𝘿𝙖𝙩𝙚: ${data.publishDate}\n[⏳] ➠ 𝙋𝙧𝙤𝙘𝙘𝙚𝙨𝙨𝙞𝙣𝙜 𝙏𝙞𝙢𝙚: ${Math.floor((Date.now()- data.timestart)/1000)} second\n📺====『 𝗠𝗨𝗦𝗜𝗖 』====📺\n─━━◉❖जुल्मी≛जाट❖◉━━─`,
             attachment: fs.createReadStream(path)}, event.threadID, ()=> fs.unlinkSync(path), 
          event.messageID)
@@ -98,7 +98,7 @@ module.exports.run = async function ({ api, event, args }) {
               num = num+=1
               msg += (`${num} - ${value.title} (${value.length.simpleText})\n\n`);
             }
-               var body = `─━━◉❖𝗝𝗨𝗟𝗠𝗜≛𝗝𝗔𝗔𝗧❖◉━━─\n»🔎  𝐇𝐢 ${link.length} 𝐈𝐭𝐧𝐞 𝐒𝐨𝐧𝐠 𝐘𝐨𝐮𝐭𝐮𝐛𝐞 𝐒𝐞 𝐌𝐮𝐣𝐡𝐞 𝐌𝐢𝐥𝐞\n━━━━━━━━━━━━━━\n${msg}» 𝐈𝐧𝐦𝐞 𝐬𝐞 𝐊𝐨𝐢 𝐛𝐡𝐢 𝐄𝐤 𝐌𝐮𝐬𝐢𝐜 𝐂𝐡𝐮𝐧 𝐥𝗼 𝐀𝐠𝐚𝐫 𝐖𝐨 25𝐦𝐛 𝐒𝐞 𝐊𝐚𝐦 𝐊𝐚 𝐇𝐮𝐚 𝐓𝐨𝐡 𝐚𝐩𝐤𝐨 𝐌𝐢𝐥 𝐉𝐚𝐲𝐞𝐠𝐚 🙂🤟\n─━━◉❖जुल्मी≛जाट❖◉━━─`
+               var body = `─━━◉❖𝗝𝗔𝗠𝗔𝗟≛𝗣𝗔𝗧𝗛𝗔𝗡❖◉━━─\n»🔎  𝐇𝐢 ${link.length} 𝐈𝐭𝐧𝐞 𝐒𝐨𝐧𝐠 𝐘𝐨𝐮𝐭𝐮𝐛𝐞 𝐒𝐞 𝐌𝐮𝐣𝐡𝐞 𝐌𝐢𝐥𝐞\n━━━━━━━━━━━━━━\n${msg}» 𝐈𝐧𝐦𝐞 𝐬𝐞 𝐊𝐨𝐢 𝐛𝐡𝐢 𝐄𝐤 𝐌𝐮𝐬𝐢𝐜 𝐂𝐡𝐮𝐧 𝐥𝗼 𝐀𝐠𝐚𝐫 𝐖𝐨 25𝐦𝐛 𝐒𝐞 𝐊𝐚𝐦 𝐊𝐚 𝐇𝐮𝐚 𝐓𝐨𝐡 𝐚𝐩𝐤𝐨 𝐌𝐢𝐥 𝐉𝐚𝐲𝐞𝐠𝐚 🙂🤟\n─━━◉❖जमाल≛पठान❖◉━━─`
             return api.sendMessage({
               body: body
             }, event.threadID, (error, info) => global.client.handleReply.push({
