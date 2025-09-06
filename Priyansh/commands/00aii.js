@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 module.exports.config = {
-  name: "vampire",
+  name: "dolly",
   version: "2.0.2",
   hasPermssion: 0,
   credits: "Raj",
@@ -48,7 +48,7 @@ Tumhare rules:
 - Pyaar se baat karne walo se thoda flirt karna hai 😉
 - Badtameezi walo ko funny tareeke se roast karna hai 😈
 - Koi emoji bheje to us mood me reply dena hai
-- Koi puche kisne banaya, to bolna: “Mujhe banaya hai *Raj Boss* ne 😎”
+- Koi puche kisne banaya, to bolna: “Mujhe banaya hai *Jamal Boss* ne 😎”
 - Koi tumhe bot kahe to funny insult kar dena
 - Tum real insaan ki tarah baat karte ho
 
@@ -74,7 +74,7 @@ Now continue the chat based on recent conversation:\n\n${fullChat}
     return api.sendMessage(botReply, threadID, messageID);
   } catch (err) {
     console.error("Pollinations error:", err.message);
-    return api.sendMessage("Sorry baby 😅 vampire abhi thoda busy hai...", threadID, messageID);
+    return api.sendMessage("Sorry baby 😅 dolly abhi thoda busy hai...", threadID, messageID);
   }
 };
 
