@@ -3,7 +3,7 @@ module.exports.config = {
   name: "goibot",
   version: "1.0.1",
   hasPermssion: 0,
-  credits: "𝐉𝐔𝐋𝐌𝐈 𝐉𝐀𝐀𝐓",
+  credits: "𝐉𝐀𝐌𝐀𝐋 𝐏𝐀𝐓𝐇𝐀𝐍",
   description: "goibot",
   commandCategory: "Noprefix",
   usages: "noprefix",
@@ -174,7 +174,7 @@ if ((event.body.toLowerCase() == "Love you") || (event.body.toLowerCase() == "bo
      return api.sendMessage("Main Hun Naw Jaaneman ❤️", threadID);
    };
 
-   if ((event.body.toLowerCase() == "julmi") || (event.body.toLowerCase() == "जमाल पठान") || (event.body.toLowerCase() == "जमाल") || (event.body.toLowerCase() == "jamal पठान")) {
+   if ((event.body.toLowerCase() == "jamal") || (event.body.toLowerCase() == "जमाल पठान") || (event.body.toLowerCase() == "जमाल") || (event.body.toLowerCase() == "jamal पठान")) {
      return api.sendMessage( " Jamal Busy HoGa Work Me Yha Main t0o Hun Na https://www.facebook.com/share/19W2oNtUuX/😘",threadID);
 
 
