@@ -39,7 +39,7 @@ module.exports = {
       event.messageID
     );
 
-    try {u
+    try {
       const searchResults = await ytSearch(songName);
       if (!searchResults || !searchResults.videos.length) {
         throw new Error("No results found for your search query.");
