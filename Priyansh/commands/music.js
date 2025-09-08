@@ -8,7 +8,7 @@ module.exports = {
     name: "music",
     version: "1.0.3",
     hasPermssion: 0,
-    credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
+    credits: "𝑵𝑲 𝑬𝑫𝑰𝑫𝑶𝑻",
     description: "Download YouTube song from keyword search and link",
     commandCategory: "Media",
     usages: "[songName] [type]",
@@ -33,14 +33,13 @@ module.exports = {
       type = "audio";
     }
 
-    const processingMessage = await api.sendMessage(
-      "✅ Processing your request. Please wait...",
+    const processingMessage = await api.sendMessage("╔════════════════════╗\n🎶 𝑴𝑼𝑺𝑰𝑪 𝑷𝑳𝑨𝒀𝑬𝑹 🎶\n╚════════════════════╝\n\n🚩 जय श्री राम अल्लाह हु अकबर 🤲  \n✨ 𝑾𝒆𝒍𝒄𝒐𝒎𝒆 𝑻𝒐  𝑴𝒖𝒔𝒊𝒄 𝑩𝒐𝒕 ✨\n\n━━━━━━━━━━━━━━━━━━━\n⏳ 𝑷𝒍𝒆𝒂𝒔𝒆 𝑾𝒂𝒊𝒕 𝑫𝒆𝒂𝒓 𝑼𝒔𝒆𝒓...  \n🔍 𝑺𝒆𝒂𝒓𝒄𝒉𝒊𝒏𝒈 𝒀𝒐𝒖𝒓 𝑭𝒂𝒗𝒐𝒖𝒓𝒊𝒕𝒆 𝑺𝒐𝒏𝒈 🎼  \n🎵 𝑮𝒆𝒕 𝑹𝒆𝒂𝒅𝒚 𝑭𝒐𝒓 𝑩𝒆𝒔𝒕 𝑴𝒖𝒔𝒊𝒄 𝑬𝒙𝒑𝒆𝒓𝒊𝒆𝒏𝒄𝒆 💫\n━━━━━━━━━━━━━━━━━━━\n\n💠 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 ➤ 👑 𝗝𝗔𝗠𝗔𝗟  👑  \n 𝑻𝒉𝒆 𝑲𝒊𝒏𝒈 𝑶𝒇 𝑩𝒐𝒕𝒔 🔥`,",
       event.threadID,
       null,
       event.messageID
     );
 
-    try {
+    try {u
       const searchResults = await ytSearch(songName);
       if (!searchResults || !searchResults.videos.length) {
         throw new Error("No results found for your search query.");
