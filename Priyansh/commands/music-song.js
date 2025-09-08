@@ -1,148 +1,115 @@
-const axios = require("axios");
-const fs = require("fs-extra");
-const path = require("path");
-
-module.exports.config = {
-  name: "music",
-  version: "3.0.1",
-  hasPermssion: 0,
-  credits: "Your Name (Fixed by ChatGPT)",
-  description: "Search & download YouTube music",
-  commandCategory: "media",
-  usages: ".music [song name]",
-  cooldowns: 5
-};
-
-async function testApi(query) {
-  const testUrl = `https://api.princetechn.com/api/search/yts?apikey=prince&query=${encodeURIComponent(query)}`;
-  try {
-    const response = await axios.get(testUrl, { timeout: 10000 });
-    console.log("API Test Full Response:", JSON.stringify(response.data, null, 2));
-    return response.data;
-  } catch (e) {
-    console.error("API Test Failed:", e.message);
-    return null;
-  }
+const fs = require('fs');
+const ytdl = require('ytdl-core');
+const { resolve } = require('path');
+async function downloadMusicFromYoutube(link, path) {
+  var timestart = Date.now();
+  if(!link) return 'Thiếu link'
+  var resolveFunc = function () { };
+  var rejectFunc = function () { };
+  var returnPromise = new Promise(function (resolve, reject) {
+    resolveFunc = resolve;
+    rejectFunc = reject;
+  });
+    ytdl(link, {
+            filter: format =>
+                format.quality == 'tiny' && format.audioBitrate == 48 && format.hasAudio == true
+        }).pipe(fs.createWriteStream(path))
+        .on("close", async () => {
+            var data = await ytdl.getInfo(link)
+            var result = {
+                title: data.videoDetails.title,
+                dur: Number(data.videoDetails.lengthSeconds),
+              publishDate:
+data.videoDetails.publishDate,                    
+                viewCount: data.videoDetails.viewCount,
+                likes: data.videoDetails.likes,
+                author: data.videoDetails.author.name,
+                timestart: timestart
+            }
+            resolveFunc(result)
+        })
+  return returnPromise
 }
-
-module.exports.run = async function({ api, event, args }) {
-  try {
-    const query = args.join(" ");
-    if (!query) return api.sendMessage("🎵 Please enter a song name", event.threadID);
-
-    // React and notify  
-    api.setMessageReaction("🔍", event.messageID, () => {}, true);  
-    api.sendMessage(`🔎 Searching music for: "${query}"`, event.threadID);  
-
-    const apiTest = await testApi(query);  
-    if (!apiTest?.results?.length) {  
-      return api.sendMessage(  
-        `🔴 API Error but works manually?\n\nTry:\n1. Wait 5 mins\n2. Use VPN\n3. Contact admin\n\nDebug: ${apiTest ? "Empty results" : "API failed"}`,  
-        event.threadID  
-      );  
-    }  
-
-    const res = await axios.get(  
-      `https://api.princetechn.com/api/search/yts?apikey=prince&query=${encodeURIComponent(query)}`,  
-      {  
-        headers: {  
-          "User-Agent": "Mozilla/5.0",  
-          "Accept": "application/json"  
-        },  
-        timeout: 15000  
-      }  
-    );  
-
-    if (!res.data?.results?.length) {  
-      return api.sendMessage(`❌ No results for "${query}"`, event.threadID);  
-    }  
-
-    const list = res.data.results.slice(0, 6);  
-    let msg = "🎧 Results:\n\n";  
-    list.forEach((item, i) => {  
-      msg += `${i + 1}. ${item.title} (${item.duration?.timestamp || "?"})\n`;  
-    });  
-    msg += "\nReply 1-6 to download";  
-
-    global.musicCache = { ...global.musicCache, [event.senderID]: list };  
-
-    // ✅ Add final reaction  
-    api.setMessageReaction("✅", event.messageID, () => {}, true);  
-
-    return api.sendMessage(msg, event.threadID, (err, info) => {  
-      if (err) return console.error(err);  
-      global.client.handleReply.push({  
-        name: this.config.name,  
-        messageID: info.messageID,  
-        author: event.senderID,  
-        type: "music_select"  
-      });  
-    });
-
-  } catch (err) {
-    console.error("Run Error:", err);
-    return api.sendMessage(
-      `⚠️ Error:\n\n• Status: ${err.response?.status || "Unknown"}\n• Message: ${err.message}`,
-      event.threadID
-    );
-  }
+module.exports.config = {
+    name: "song",
+    version: "1.0.0",
+    hasPermssion: 0,
+    credits: "D-Jukie",
+    description: "Phát nhạc thông qua link YouTube hoặc từ khoá tìm kiếm",
+    commandCategory: "music",
+    usages: "[searchMusic]",
+    cooldowns: 0
 };
 
-module.exports.handleReply = async function({ api, event, handleReply }) {
-  try {
-    if (handleReply.author !== event.senderID) return;
-
-    const choice = parseInt(event.body);  
-    if (isNaN(choice) || choice < 1 || choice > 6) {  
-      return api.sendMessage("❌ Invalid choice. Reply with 1-6", event.threadID);  
-    }  
-
-    const cache = global.musicCache?.[event.senderID];  
-    if (!cache) return api.sendMessage("⌛ Session expired. Search again", event.threadID);  
-
-    const video = cache[choice - 1];  
-    const downloadRes = await axios.get(  
-      `https://api.princetechn.com/api/download/yta?apikey=prince&url=${encodeURIComponent(video.url)}`,  
-      { timeout: 20000 }  
-    );  
-
-    if (!downloadRes.data?.result?.download_url) {  
-      return api.sendMessage("❌ Download failed. Try another song.", event.threadID);  
-    }  
-
-    const song = downloadRes.data.result;  
-    const time = Date.now();  
-    const paths = {  
-      audio: path.join(__dirname, `cache/music_${time}.mp3`),  
-      thumb: path.join(__dirname, `cache/thumb_${time}.jpg`)  
-    };  
-
-    const [audio, thumb] = await Promise.all([  
-      axios.get(song.download_url, { responseType: "arraybuffer", timeout: 30000 }),  
-      axios.get(song.thumbnail, { responseType: "arraybuffer" })  
-    ]);  
-
-    await Promise.all([  
-      fs.writeFile(paths.audio, audio.data),  
-      fs.writeFile(paths.thumb, thumb.data)  
-    ]);  
-
-    // Send thumbnail with title first
-    await api.sendMessage({ 
-      body: `🎶 ${song.title}\n⏱ ${song.duration}`,
-      attachment: fs.createReadStream(paths.thumb)
-    }, event.threadID);
-
-    // Then send the audio
-    await api.sendMessage({
-      attachment: fs.createReadStream(paths.audio)
-    }, event.threadID);
-
-    // Cleanup
-    Object.values(paths).forEach(p => fs.unlink(p, () => {}));
-
-  } catch (err) {
-    console.error("Download Error:", err);
-    api.sendMessage(`⚠️ Download failed:\n\n${err.message}`, event.threadID);
-  }
-};
+module.exports.handleReply = async function ({ api, event, handleReply }) {
+    const axios = require('axios')
+    const { createReadStream, unlinkSync, statSync } = require("fs-extra")
+    try {
+        var path = `${__dirname}/cache/1.mp3`
+        var data = await downloadMusicFromYoutube('https://www.youtube.com/watch?v=' + handleReply.link[event.body -1], path);
+        if (fs.statSync(path).size > 26214400) return api.sendMessage('The file cannot be sent because it is larger than 25MB.', event.threadID, () => fs.unlinkSync(path), event.messageID);
+        api.unsendMessage(handleReply.messageID)
+        return api.sendMessage({ 
+		body: `─━━◉❖𝗝𝗔𝗠𝗔𝗟≛𝗣𝗔𝗧𝗛𝗔𝗡❖◉━━─\n====『 𝗠𝗨𝗦𝗜𝗖 』====
+[🎼] ➠ 𝐓𝐢𝐭𝐥𝐞: ${data.title}\n[📺] ➠ 𝘼𝙪𝙩𝙝𝙤𝙧: ${data.author}\n[⏰] ➠ 𝙏𝙞𝙢𝙚: ${this.convertHMS(data.dur)}\n[👀] ➠ 𝙑𝙞𝙚𝙬𝙨: ${data.viewCount}\n[💞] ➠ 𝙇𝙞𝙠𝙚𝙨: ${data.likes}\n 𝙋𝙪𝙗𝙡𝙞𝙨𝙝 𝘿𝙖𝙩𝙚: ${data.publishDate}\n[⏳] ➠ 𝙋𝙧𝙤𝙘𝙘𝙚𝙨𝙨𝙞𝙣𝙜 𝙏𝙞𝙢𝙚: ${Math.floor((Date.now()- data.timestart)/1000)} second\n📺====『 𝗠𝗨𝗦𝗜𝗖 』====📺\n─━━◉❖जमाल≛पठान❖◉━━─`,
+            attachment: fs.createReadStream(path)}, event.threadID, ()=> fs.unlinkSync(path), 
+         event.messageID)
+            
+    }
+    catch (e) { return console.log(e) }
+}
+module.exports.convertHMS = function(value) {
+    const sec = parseInt(value, 10); 
+    let hours   = Math.floor(sec / 3600);
+    let minutes = Math.floor((sec - (hours * 3600)) / 60); 
+    let seconds = sec - (hours * 3600) - (minutes * 60); 
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return (hours != '00' ? hours +':': '') + minutes+':'+seconds;
+}
+module.exports.run = async function ({ api, event, args }) {
+    if (args.length == 0 || !args) return api.sendMessage('» Tutte kahe ke , song ka naam kon likhega!', event.threadID, event.messageID);
+    const keywordSearch = args.join(" ");
+    var path = `${__dirname}/cache/1.mp3`
+    if (fs.existsSync(path)) { 
+        fs.unlinkSync(path)
+    }
+    if (args.join(" ").indexOf("https://") == 0) {
+        try {
+            var data = await downloadMusicFromYoutube(args.join(" "), path);
+            if (fs.statSync(path).size > 26214400) return api.sendMessage(' 25MB se jyada hai send ni hoga.', event.threadID, () => fs.unlinkSync(path), event.messageID);
+            return api.sendMessage({ 
+                body: `➠Title: ${data.title}\n➠Name Kênh: ${data.author}\n➠Thời gian: ${this.convertHMS(data.dur)}\n➠Lượt xem: ${data.viewCount}\n➠Lượt thích: ${data.likes}\n➠Thời gian xử lý: ${Math.floor((Date.now()- data.timestart)/1000)} second\n💿====DISME PROJECT====💿`,
+                attachment: fs.createReadStream(path)}, event.threadID, ()=> fs.unlinkSync(path), 
+            event.messageID)
+            
+        }
+        catch (e) { return console.log(e) }
+    } else {
+          try {
+            var link = [],
+                msg = "",
+                num = 0
+            const Youtube = require('youtube-search-api');
+            var data = (await Youtube.GetListByKeyword(keywordSearch, false,6)).items;
+            for (let value of data) {
+              link.push(value.id);
+              num = num+=1
+              msg += (`${num} - ${value.title} (${value.length.simpleText})\n\n`);
+            }
+               var body = `─━━◉❖𝗝𝗔𝗠𝗔𝗟≛𝗣𝗔𝗧𝗛𝗔𝗡❖◉━━─\n»🔎  𝐇𝐢 ${link.length} 𝐈𝐭𝐧𝐞 𝐒𝐨𝐧𝐠 𝐘𝐨𝐮𝐭𝐮𝐛𝐞 𝐒𝐞 𝐌𝐮𝐣𝐡𝐞 𝐌𝐢𝐥𝐞\n━━━━━━━━━━━━━━\n${msg}» 𝐈𝐧𝐦𝐞 𝐬𝐞 𝐊𝐨𝐢 𝐛𝐡𝐢 𝐄𝐤 𝐌𝐮𝐬𝐢𝐜 𝐂𝐡𝐮𝐧 𝐥𝗼 𝐀𝐠𝐚𝐫 𝐖𝐨 25𝐦𝐛 𝐒𝐞 𝐊𝐚𝐦 𝐊𝐚 𝐇𝐮𝐚 𝐓𝐨𝐡 𝐚𝐩𝐤𝐨 𝐌𝐢𝐥 𝐉𝐚𝐲𝐞𝐠𝐚 🙂🤟\n─━━◉❖जमाल≛पठान❖◉━━─`
+            return api.sendMessage({
+              body: body
+            }, event.threadID, (error, info) => global.client.handleReply.push({
+              type: 'reply',
+              name: this.config.name,
+              messageID: info.messageID,
+              author: event.senderID,
+              link
+            }), event.messageID);
+          } catch(e) {
+            return api.sendMessage('Erorr 🗡 please try + Music !\n' + e, event.threadID, event.messageID);
+        }
+    }
+      }
