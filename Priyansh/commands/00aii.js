@@ -1,13 +1,13 @@
 const axios = require("axios");
 
 module.exports.config = {
-  name: "nk",
+  name: "jamal",
   version: "2.0.2",
   hasPermssion: 0,
   credits: "Raj",
-  description: "Naughty AI boyfriend nk",
+  description: "Naughty AI boyfriend jamal",
   commandCategory: "ai",
-  usages: "nk",
+  usages: "jamal",
   cooldowns: 2
 };
 
@@ -70,14 +70,14 @@ Now continue the chat based on recent conversation:\n\n${fullChat}
     const res = await axios.get(url);
     const botReply = (typeof res.data === "string" ? res.data : JSON.stringify(res.data)).trim();
 
-    chatHistory[senderID].push(`nk: ${botReply}`);
+    chatHistory[senderID].push(`jamal: ${botReply}`);
     return api.sendMessage(botReply, threadID, messageID);
   } catch (err) {
     console.error("Pollinations error:", err.message);
-    return api.sendMessage("Sorry baby 😅 nk abhi thoda busy hai...", threadID, messageID);
+    return api.sendMessage("Sorry baby 😅 jamal abhi thoda busy hai...", threadID, messageID);
   }
 };
 
 module.exports.run = async function({ api, event }) {
-  return api.sendMessage("Mujhse baat karne ke liye pehle 'nk' likho, phir mere message ka reply karo 😎", event.threadID, event.messageID);
+  return api.sendMessage("Mujhse baat karne ke liye pehle 'jamal' likho, phir mere message ka reply karo 😎", event.threadID, event.messageID);
 };
