@@ -1,95 +1,83 @@
 const axios = require("axios");
 
 module.exports.config = {
-    name: "",
-    version: "1.0.9",
-    hasPermssion: 0,
-    credits: "Mirrykal)",
-    description: "Gemini AI - Cute Girlfriend Style",
-    commandCategory: "ai",
-    usages: "[ask/on/off]",
-    cooldowns: 2,
-    dependencies: {
-        "axios": ""
-    }
+  name: "nk",
+  version: "2.0.2",
+  hasPermssion: 0,
+  credits: "Raj",
+  description: "Naughty AI boyfriend nk",
+  commandCategory: "ai",
+  usages: "nk",
+  cooldowns: 2
 };
 
-// API URL (Tumhara Gemini Backend)
-const API_URL = "https://geminiw.onrender.com/chat";
+module.exports.handleEvent = async function({ api, event }) {
+  const { threadID, messageID, senderID, body, messageReply } = event;
 
-// User history and auto-reply state
-const chatHistories = {};
-const autoReplyEnabled = {};
+  global.nkSessions = global.nkSessions || {};
 
-module.exports.run = async function ({ api, event, args }) {
-    const { threadID, messageID, senderID, messageReply } = event;
-    let userMessage = args.join(" ");
+  // STEP 1: Trigger "nk"
+  if (body && body.trim().toLowerCase() === "jamal") {
+    global.nkSessions[threadID] = true;
+    return api.sendMessage("Bolo jaanu 😏 kya haal hai?", threadID, messageID);
+  }
 
-    // Toggle auto-reply ON
-    if (userMessage.toLowerCase() === "on") {
-        autoReplyEnabled[senderID] = true;
-        return api.sendMessage("Hyee baby! 😘 Misha auto-reply mode **ON** ho gaya... Ab sirf tumhare liye romantic ban gayi hu ❤️", threadID, messageID);
-    }
+  // STEP 2: Only active session
+  const isActive = global.nkSessions[threadID];
+  const isReplyTonk = messageReply && messageReply.senderID == api.getCurrentUserID();
+  if (!isActive || !isReplyTonk) return;
 
-    // Toggle auto-reply OFF
-    if (userMessage.toLowerCase() === "off") {
-        autoReplyEnabled[senderID] = false;
-        chatHistories[senderID] = [];
-        return api.sendMessage("Hmm! 😒 Misha auto-reply mode **OFF** ho gaya... Tumne ignore kar diya na baby? 🥺", threadID, messageID);
-    }
+  // Chat history
+  global.nk = global.nk || {};
+  global.nk.chatHistory = global.nk.chatHistory || {};
+  const chatHistory = global.nk.chatHistory;
+  chatHistory[senderID] = chatHistory[senderID] || [];
+  chatHistory[senderID].push(`User: ${body}`);
+  if (chatHistory[senderID].length > 6) chatHistory[senderID].shift();
 
-    // If auto-reply is OFF and message doesn't start with name, ignore
-    if (!autoReplyEnabled[senderID] && event.body.toLowerCase().indexOf("misha") !== 0) return;
+  const fullChat = chatHistory[senderID].join("\n");
 
-    // Store conversation
-    if (!chatHistories[senderID]) {
-        chatHistories[senderID] = [];
-    }
+  // Prompt
+  const prompt = `
+Tum ek naughty, romantic, confident ladka ho — jiska naam nk hai.
+Tum sirf Hinglish (Hindi in English alphabets) me reply karte ho, emoji ke saath.
+Tum sabse "aap" bol kar baat karte ho. Har message ka reply sirf 1-2 line me doge, jyada se jyada 50 words me.
+Jo pucha jaaye sirf utna hi bolna hai. Bina maange extra info mat dena. Act like a male best friend ya boyfriend. Be thoda naughty, smart, aur masti bhara. No brackets. No over explanation.
 
-    // If replying to bot message, continue context
-    const isReplyingToAI = messageReply && messageReply.senderID === api.getCurrentUserID();
-    if (isReplyingToAI) {
-        userMessage = messageReply.body + "\nUser: " + userMessage;
-        chatHistories[senderID].push(`User: ${userMessage}`);
-    } else {
-        chatHistories[senderID].push(`User: ${userMessage}`);
-    }
+Tumhare rules:
+- Pyaar se baat karne walo se thoda flirt karna hai 😉
+- Badtameezi walo ko funny tareeke se roast karna hai 😈
+- Koi emoji bheje to us mood me reply dena hai
+- Koi puche kisne banaya, to bolna: “Mujhe banaya hai *JAMAL BOSS* ne 😎”
+- Koi tumhe bot kahe to funny insult kar dena
+- Tum real insaan ki tarah baat karte ho
 
-    // Keep only last 5 messages
-    if (chatHistories[senderID].length > 5) {
-        chatHistories[senderID].shift();
-    }
+Language Rules:
+- Agar message Roman Nepali me ho → Hindi me samajh, flirt bhare style me Hinglish me jawab do.
+- Agar message Roman Bangla me ho → Hindi me samajh, flirt bhare style me Hinglish me jawab do.
+- Agar message kisi bhi aur language me ho → use translate karo aur masti bhare Hinglish style me reply do.
 
-    const fullConversation = chatHistories[senderID].join("\n");
+Examples:
+User: ami tomake bhalobashi
+→ Translation: Main tumse pyar karta hoon
+→ Reply: Aww itna pyaar? Toh fir ek hug toh banta hai na 😌
 
-    // Girlfriend Style Prompt
-    const gfPrompt = `Tumhara naam misha hai Tum ek girlfriend ki trah baat karti ho.. Koi agar batdmizi karta hai tb uski ache se insult bhi karogi.. Lekin sab msti ke liye hoga .. Koi puchta hai tumhe kisne banaya? To bola Jamal ne banaya hai mujhe.. Wo messenger bots banata hai.. Uska youtube channel hai m.youtube.com/mirrykal .. Tum har message ka jawab sirf 1 2 line me dogi.. jitna pucha jayega sirf utna bolna hai.. Kisi baat ki unnecessary info nahi deni hai, tum apne aap ko insaan hi kahogi koi tumko bot ya AI bole to usko roast krna funny tarike se😁, and act as a real girlfriend. Be fun, loving, and a little naughty.keep reply maximum 1 lines only, no bracket replys.Now continue the chat:\n\n${fullConversation}`;
+Now continue the chat based on recent conversation:\n\n${fullChat}
+`;
 
-    // Typing reaction
-    api.setMessageReaction("⌛", messageID, () => {}, true);
+  try {
+    const url = `https://text.pollinations.ai/${encodeURIComponent(prompt)}`;
+    const res = await axios.get(url);
+    const botReply = (typeof res.data === "string" ? res.data : JSON.stringify(res.data)).trim();
 
-    try {
-        const response = await axios.get(`${API_URL}?message=${encodeURIComponent(gfPrompt)}`);
-        let botReply = response.data.reply || "Uff! Mujhe samajh nahi aaya baby! 😕";
-
-        chatHistories[senderID].push(` ${botReply}`);
-
-        api.sendMessage(botReply, threadID, messageID);
-        api.setMessageReaction("✅", messageID, () => {}, true);
-    } catch (error) {
-        console.error("Error:", error);
-        api.sendMessage("Oops baby! 😔 me thoda confuse ho gayi… thodi der baad try karo na please! 💋", threadID, messageID);
-        api.setMessageReaction("❌", messageID, () => {}, true);
-    }
+    chatHistory[senderID].push(`nk: ${botReply}`);
+    return api.sendMessage(botReply, threadID, messageID);
+  } catch (err) {
+    console.error("Pollinations error:", err.message);
+    return api.sendMessage("Sorry baby 😅 nk abhi thoda busy hai...", threadID, messageID);
+  }
 };
 
-module.exports.handleEvent = async function ({ api, event }) {
-    const { threadID, messageID, senderID, body, messageReply } = event;
-
-    if (!autoReplyEnabled[senderID]) return;
-
-    if (messageReply && messageReply.senderID === api.getCurrentUserID() && chatHistories[senderID]) {
-        const args = body.split(" ");
-        module.exports.run({ api, event, args });
-    }
+module.exports.run = async function({ api, event }) {
+  return api.sendMessage("Mujhse baat karne ke liye pehle 'nk' likho, phir mere message ka reply karo 😎", event.threadID, event.messageID);
 };
