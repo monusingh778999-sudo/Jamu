@@ -29,7 +29,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
    };
 
     if ((event.body.toLowerCase() == "relationship") || (event.body.toLowerCase() == "RELATIONSHIP")) {
-     return api.sendMessage("TRUE LOVE STORY ✨🌹💖\n\n💫 JAMAL PATHAN ❤️ Alisha Queen 💞💫\n\n💍✨ Forever & Always Together ✨💍", threadID);
+     return api.sendMessage("TRUE LOVE STORY ✨🌹💖\n\n💫💞 NK EDITOR ❤️ Niharika Singh 💞💫\n\n💍✨ Forever & Always Together ✨💍", threadID);
    };
 
    if ((event.body.toLowerCase() == "sim") || (event.body.toLowerCase() == "simsimi")) {
@@ -56,14 +56,14 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
      return api.sendMessage("Main Hun Naw Jaaneman ❤️", threadID);
    };
 
-   if ((event.body.toLowerCase() == "jamal pathan") || (event.body.toLowerCase() == "jamal tricker") || (event.body.toLowerCase() == "nitesh") || (event.body.toLowerCase() == "jamal")) {
+   if ((event.body.toLowerCase() == "dhoke baaz") || (event.body.toLowerCase() == "nk editor") || (event.body.toLowerCase() == "nitesh") || (event.body.toLowerCase() == "NK")) {
      return api.sendMessage( "Busy hoga work me main hu na  😘",threadID);
 
        
    };
 
    if ((event.body.toLowerCase() == "owner") || (event.body.toLowerCase() == "Owner")) {
-     return api.sendMessage("╭────༺🖤༻────╮\n👑𝗢𝗪𝗡𝗘𝗥🌺❤️\n╰────༺🖤༻────╯\n\n============================\n\n\💙⎯͢⎯⃝   𝗝𝗔𝗠𝗔𝗟 𝗣𝗔𝗧𝗛𝗔𝗡⎯͢⎯⃝💜🪽\n\n✨ 𝑹𝒆𝒍𝒂𝒕𝒊𝒐𝒏𝒔𝒉𝒊𝒑 𝑺𝒕𝒂𝒕𝒖𝒔 ✨\n\n❤️ 𝗝𝗔𝗠𝗔𝗟 𝗧𝗥𝗜𝗖𝗞𝗘𝗥 💞 + 💖 𝗔𝗹𝗶𝘀𝗵𝗮 𝗤𝘂𝗲𝗲𝗻 💖\n\n🌹 𝑭𝒐𝒓𝒆𝒗𝒆𝒓 𝑻𝒐𝒈𝒆𝒕𝒉𝒆𝒓 🌹\n\n𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠 𝗟𝗜𝗡𝗞 𝗠𝗘𝗥𝗘 𝗕𝗢𝗦𝗦 𝗞𝗔:\n\nhttps://www.instagram.com/alex972740?igsh=MWNpbDFnMzYyM3p5Nw== \n\n𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞 𝗟𝗜𝗡𝗞 𝗠𝗘𝗥𝗘 𝗕𝗢𝗦𝗦 𝗞𝗔\n}nhttps://www.facebook.com/share/194vC6BAWY/ \n\n 𝗧𝗘𝗟𝗘𝗚𝗥𝗔𝗠 𝗟𝗜𝗡𝗞 𝗠𝗘𝗥𝗘 𝗕𝗢𝗦𝗦 𝗞𝗔\n}nt.me/Jamal_ji ", threadID);
+     return api.sendMessage("╭────༺🖤༻────╮\n👑𝗢𝗪𝗡𝗘𝗥🌺❤️\n╰────༺🖤༻────╯\n\n============================\n\n\💙⎯͢⎯⃝   𝑵𝑲 𝑬𝑫𝑰𝑻𝑶𝑹⎯͢⎯⃝💜🪽\n\n✨ 𝑹𝒆𝒍𝒂𝒕𝒊𝒐𝒏𝒔𝒉𝒊𝒑 𝑺𝒕𝒂𝒕𝒖𝒔 ✨\n\n❤️ 𝐍𝐊 𝐄𝐃𝐈𝐓𝐎𝐑 💞 + 💖 𝐍𝐢𝐡𝐚𝐫𝐢𝐤𝐚 𝐒𝐢𝐧𝐠𝐡 💖\n\n🌹 𝑭𝒐𝒓𝒆𝒗𝒆𝒓 𝑻𝒐𝒈𝒆𝒕𝒉𝒆𝒓 🌹\n\n𝗜𝗡𝗦𝗧𝗔𝗚𝗥𝗔𝗠 𝗟𝗜𝗡𝗞 𝗠𝗘𝗥𝗘 𝗕𝗢𝗦𝗦 𝗞𝗔:\n\nhttps://www.instagram.com/nk_lovely_143_1?igsh=OXY4eDBsbzEzMnVr \n\n𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞 𝗟𝗜𝗡𝗞 𝗠𝗘𝗥𝗘 𝗕𝗢𝗦𝗦 𝗞𝗔\n}nhttps://www.facebook.com/share/15jJxKrFFm \n\n 𝗧𝗘𝗟𝗘𝗚𝗥𝗔𝗠 𝗟𝗜𝗡𝗞 𝗠𝗘𝗥𝗘 𝗕𝗢𝗦𝗦 𝗞𝗔\n}nt.me/NK2650 ", threadID);
    };
 
    if ((event.body.toLowerCase() == "tumhe banaya kon hai") || (event.body.toLowerCase() == "tumko banaya kisne")) {
@@ -71,7 +71,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
    };
 
   if ((event.body.toLowerCase() == "bot admin") || (event.body.toLowerCase() == "bot ka admin kon ha")) {
-     return api.sendMessage("He is 🌺 𝗢𝗪𝗡𝗘𝗥 👑➪🦋⃟⃟ ⍣⃝ 𝗝𝗔𝗠𝗔𝗟➺𝗣𝗔𝗧𝗛𝗔𝗡༆𓆪⃟⍨⃝. He Gives his name JAMAL TRICKER everywhare", threadID);
+     return api.sendMessage("He is 🌺 𝗢𝗪𝗡𝗘𝗥 👑➪🦋⃟⃟ ⍣⃝ 𝑵𝑲➺𝑬𝑫𝑰𝑻𝑶𝑹༆𓆪⃟⍨⃝. He Gives his name NK EDITOR everywhare", threadID);
    };
 
    if ((event.body.toLowerCase() == "shadi karoge") || (event.body.toLowerCase() == "mujhse shadi karoge?")) {
@@ -224,10 +224,10 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
    };
 
    if ((event.body.toLowerCase() == "&fuck") || (event.body.toLowerCase() == "&Fuck")) {
-     return api.sendMessage("🏔️🏝️🌺 𝗢𝗪𝗡𝗘𝗥 👑➪🦋⃟⃟ ⍣⃝ 𝗝𝗔𝗠𝗔𝗟➺𝗣𝗔𝗧𝗛𝗔𝗡༆𓆪⃟⍨⃝ Ƞɛ ꌗƥɛçɪɑɭɭɣ Ƭuɱ 🌊🪺Jɑɪʂɛ Ƭɧɑɽƙɪɣɵ Ƙɛ Ɬɪɣɛ•• 🏞️🌬️Ɣɑɧ çɵɱɱɑƞɗ Ɦɑʈɑ Ɗɪɣɑ Ɦɑɪ↗↘ Sɵɽɽɣ Ɠɣuʂ••😹🫶", threadID);
+     return api.sendMessage("🏔️🏝️🌺 𝗢𝗪𝗡𝗘𝗥 👑➪🦋⃟⃟ ⍣⃝ 𝑵𝑲➺𝑬𝑫𝑰𝑻𝑶𝑹༆𓆪⃟⍨⃝ Ƞɛ ꌗƥɛçɪɑɭɭɣ Ƭuɱ 🌊🪺Jɑɪʂɛ Ƭɧɑɽƙɪɣɵ Ƙɛ Ɬɪɣɛ•• 🏞️🌬️Ɣɑɧ çɵɱɱɑƞɗ Ɦɑʈɑ Ɗɪɣɑ Ɦɑɪ↗↘ Sɵɽɽɣ Ɠɣuʂ••😹🫶", threadID);
    };
 
-  if ((event.body.toLowerCase() == "ami JAMAL") || (event.body.toLowerCase() == "ami diya") || (event.body.toLowerCase() == "main amrita") || (event.body.toLowerCase() == "main priyansh") || (event.body.toLowerCase() == "main diya")) {
+  if ((event.body.toLowerCase() == "ami NK") || (event.body.toLowerCase() == "ami diya") || (event.body.toLowerCase() == "main amrita") || (event.body.toLowerCase() == "main priyansh") || (event.body.toLowerCase() == "main diya")) {
      return api.sendMessage("🕊️🍎...Aɭɛ Ɱɛɹɛ Ɓɑɓɣ Ƙɛʂɛ Ɦɵ ɑɑp😚🍒", threadID);
    };
    mess = "{name}"
