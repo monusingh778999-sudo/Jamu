@@ -1,11 +1,11 @@
 const axios = require("axios");
 
 module.exports.config = {
-  name: "jamal",
+  name: "taklu",
   version: "2.0.2",
   hasPermssion: 0,
   credits: "Raj",
-  description: "Naughty AI boyfriend jamal",
+  description: "Naughty AI boyfriend taklu babu",
   commandCategory: "ai",
   usages: "jamal",
   cooldowns: 2
@@ -17,7 +17,7 @@ module.exports.handleEvent = async function({ api, event }) {
   global.nkSessions = global.nkSessions || {};
 
   // STEP 1: Trigger "nk"
-  if (body && body.trim().toLowerCase() === "jamal") {
+  if (body && body.trim().toLowerCase() === "taklu") {
     global.nkSessions[threadID] = true;
     return api.sendMessage("Bolo jaanu 😏 kya haal hai?", threadID, messageID);
   }
@@ -79,5 +79,5 @@ Now continue the chat based on recent conversation:\n\n${fullChat}
 };
 
 module.exports.run = async function({ api, event }) {
-  return api.sendMessage("Mujhse baat karne ke liye pehle 'jamal' likho, phir mere message ka reply karo 😎", event.threadID, event.messageID);
+  return api.sendMessage("Mujhse baat karne ke liye pehle 'taklu' likho, phir mere message ka reply karo 😎", event.threadID, event.messageID);
 };
