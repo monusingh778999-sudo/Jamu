@@ -2,7 +2,7 @@ module.exports.config = {
   name: "setall",
   version: "1.0.0",
   hasPermssion: 2,
-  credits: "jamal",
+  credits: "",
   description: "Set nicknames all members in Group",
   commandCategory: "Box Chat",
   usages: "[name]",
