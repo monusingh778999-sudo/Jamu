@@ -1,11 +1,11 @@
 module.exports.config = {
-  name: "setnameall",
+  name: "setall",
   version: "1.0.0",
   hasPermssion: 2,
-  credits: "Mr Chand",
-  description: "Set nicknames all Group",
-  commandCategory: "Utilities",
-  usages: "set all members name",
+  credits: "jamal",
+  description: "Set nicknames all members in Group",
+  commandCategory: "Box Chat",
+  usages: "[name]",
   cooldowns: 3
 };
 
@@ -21,4 +21,4 @@ module.exports.run = async function({ api, event, args }) {
     await delay(3000)
     api.changeNickname(`${name}`, event.threadID, setname);
   }
-}
+      }
