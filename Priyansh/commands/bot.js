@@ -357,7 +357,13 @@ if ((event.body.toLowerCase() == "I love you") || (event.body.toLowerCase() == "
     var msg = {
        
       body: `🍂✨${name}✨🍂\n\n${rand}
-     *★᭄𝗢𝘄𝗻𝗲𝗿 ཫ༄𒁍𝗝𝗔𝗠𝗔𝗟 𝗣𝗔𝗧𝗛𝗔𝗡✦`
+     **★᭄𝗢𝘄𝗻𝗲𝗿 ཫ༄𒁍≛⃝𝐋𝐞𝐠𝐚𝐧𝐝 𝐉𝐚𝐦𝐚𝐥🍀🍒
+       😍𝔸𝕡𝕦𝕟😎𝔸𝕒𝕘𝕪𝕒😝
+
+   ☝️
+      😎
+      (   )>
+   _/   _`
     }
     return api.sendMessage(msg, threadID, messageID);
   };
